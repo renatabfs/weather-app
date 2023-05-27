@@ -4,25 +4,152 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" cont ent="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./style.css">
-    <script src = './script.js'></script>
+    <link rel="stylesheet" href="./style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <script src="./script.js"></script>
     <title>Weather App</title>
   </head>
   <body>
     <div class="card-container">
       <div class="search">
-        <input type="text" class="search-bar" />
-        <button>
-          <svg xmlns="http://www.w3.org/2000/svg" height="1.5em" viewBox="0 -960 960 960" stroke-width='0' width="1.5em" viewBox = "0 0 1024" stroke = 'currentColor'><path d="M796-121 533-384q-30 26-69.959 40.5T378-329q-108.162 0-183.081-75Q120-479 120-585t75-181q75-75 181.5-75t181 75Q632-691 632-584.85 632-542 618-502q-14 40-42 75l264 262-44 44ZM377-389q81.25 0 138.125-57.5T572-585q0-81-56.875-138.5T377-781q-82.083 0-139.542 57.5Q180-666 180-585t57.458 138.5Q294.917-389 377-389Z"/></svg>
+        <input type="text" class="search-bar" placeholder="Search" />
+        <button onclick="searchCity()">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="1.5em"
+            viewBox="0 -960 960 960"
+            stroke-width="0"
+            width="1.5em"
+            viewBox="0 0 1024"
+            stroke="currentColor"
+          >
+            <path
+              d="M796-121 533-384q-30 26-69.959 40.5T378-329q-108.162 0-183.081-75Q120-479 120-585t75-181q75-75 181.5-75t181 75Q632-691 632-584.85 632-542 618-502q-14 40-42 75l264 262-44 44ZM377-389q81.25 0 138.125-57.5T572-585q0-81-56.875-138.5T377-781q-82.083 0-139.542 57.5Q180-666 180-585t57.458 138.5Q294.917-389 377-389Z"
+            />
+          </svg>
         </button>
       </div>
-      <div class="weather">
-        <h2 class="city">Clima em Vitória da Conquista</h2>
-        <div class="temp">22°C</div>
-        <img src="" alt="" class="icon"/>
-        <div class="description">Parcialmente nublado</div>
-        <div class="humidity">74%</div>
-        <div class="wind">Vento: 16 km/h</div>
+      <div class="weather loading">
+        <h2 class="city">Tempo em Vitória da Conquista</h2>
+        <div class="flex">
+          <svg
+            width="50px"
+            height="50px"
+            viewBox="0 0 1024 1024"
+            class="icon"
+            version="1.1"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="#000000"
+          >
+            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+            <g
+              id="SVGRepo_tracerCarrier"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            ></g>
+            <g id="SVGRepo_iconCarrier">
+              <path
+                d="M570.8 742c0.5-2.9 0.9-5.8 0.9-8.8V418.5H458.4v314.6c0 3 0.4 5.9 0.9 8.8-34.3 19.5-57.5 56.3-57.5 98.5 0 62.6 50.7 113.3 113.3 113.3 62.6 0 113.3-50.7 113.3-113.3-0.1-42.2-23.3-79-57.6-98.4z"
+                fill="#d9d9d9"
+              ></path>
+              <path
+                d="M594.3 730.3V194.8c0-43.7-35.6-79.3-79.3-79.3s-79.3 35.6-79.3 79.3v535.4c-35.2 25.4-56.6 66.5-56.6 110.2 0 75 61 135.9 135.9 135.9s136-60.8 136-135.8c0-43.7-21.4-84.8-56.7-110.2zM515 931.1c-50 0-90.6-40.6-90.6-90.6 0-32.1 17.4-62.1 45.3-78.4 7-4 11.3-11.5 11.3-19.6v-40.8h11.3c6.3 0 11.3-5.1 11.3-11.3 0-6.3-5.1-11.3-11.3-11.3H481v-45.3h11.3c6.3 0 11.3-5.1 11.3-11.3 0-6.3-5.1-11.3-11.3-11.3H481v-45.3h11.3c6.3 0 11.3-5.1 11.3-11.3 0-6.3-5.1-11.3-11.3-11.3H481V498h11.3c6.3 0 11.3-5.1 11.3-11.3 0-6.3-5.1-11.3-11.3-11.3H481v-45.3h11.3c6.3 0 11.3-5.1 11.3-11.3 0-6.3-5.1-11.3-11.3-11.3H481v-45.3h11.3c6.3 0 11.3-5.1 11.3-11.3 0-6.3-5.1-11.3-11.3-11.3H481v-45.3h11.3c6.3 0 11.3-5.1 11.3-11.3 0-6.3-5.1-11.3-11.3-11.3H481V226h11.3c6.3 0 11.3-5.1 11.3-11.3 0-6.3-5.1-11.3-11.3-11.3H481v-8.5c0-18.7 15.2-34 34-34 18.7 0 34 15.2 34 34v547.7c0 8.1 4.3 15.6 11.3 19.6 28 16.2 45.3 46.2 45.3 78.4 0.1 49.9-40.6 90.5-90.6 90.5z"
+                fill="#211F1E"
+              ></path>
+            </g>
+          </svg>
+          <div class="temp">22°C</div>
+        </div>
+        <div class="flex">
+          <img
+            src=" https://openweathermap.org/img/wn/04n.png"
+            alt="tempo"
+            class="icon"
+          />
+          <div class="description">Parcialmente nublado</div>
+        </div>
+        <div class="flex">
+          <svg
+            width="35px"
+            height="35px"
+            viewBox="0 0 1024 1024"
+            class="icon"
+            version="1.1"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="#000000"
+          >
+            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+            <g
+              id="SVGRepo_tracerCarrier"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            ></g>
+            <g id="SVGRepo_iconCarrier">
+              <path
+                d="M339.7 882.5C196.6 882.5 80.2 766.1 80.2 623c0-133.2 204.8-395.1 228.2-424.5 5.8-7.3 14.5-11.6 23.8-11.7 9.4-0.1 18.1 3.9 24.1 11 1.5 1.8 37.7 44.8 82.2 105.2 10.1 13.8 7.2 33.2-6.6 43.3-13.8 10.1-33.2 7.2-43.3-6.6-21.3-29-40.9-54-55.3-72.1-69.2 92-191.2 271.5-191.2 355.4 0 108.9 88.6 197.6 197.6 197.6S537.3 731.9 537.3 623c0-17.1 13.9-31 31-31s31 13.9 31 31c-0.1 143.1-116.5 259.5-259.6 259.5z"
+                fill="#1A1A1A"
+              ></path>
+              <path
+                d="M363.7 468.8c-27.9 59.7-46.8 115.7-46.8 158.4 0 164.6 133.4 298 298 298s298-133.4 298-298c0-12.8-1.9-26.9-5.5-41.9-327.2 33.9-284.9-194.9-543.7-116.5z"
+                fill="#d9d9d9"
+              ></path>
+              <path
+                d="M333.6 567.6c-38.2 239.9 123 357.7 287.3 357.7 92.8 0 144.9-12.1 199.6-78.6-261.5 20.7-428.7-99.2-486.9-279.1z"
+                fill="#d9d9d9"
+              ></path>
+              <path
+                d="M614.9 956.1C433.5 956.1 286 808.5 286 627.2c0-173.4 283.4-532.4 295.5-547.6 5.8-7.3 14.5-11.6 23.8-11.7 9.3-0.1 18.1 3.9 24.1 11 2 2.3 49 58.2 106.8 136.6 10.1 13.8 7.2 33.2-6.6 43.3-13.8 10.1-33.2 7.2-43.3-6.6-31.8-43.2-60.6-79.8-79.9-103.7C517 266.1 347.9 512.3 347.9 627.2c0 147.2 119.8 267 267 267s267-119.8 267-267c0-29.7-13.2-87.9-76.4-196.2-8.6-14.8-3.6-33.7 11.2-42.3 14.8-8.6 33.7-3.6 42.3 11.2 57.1 97.9 84.8 172.2 84.8 227.4 0 181.3-147.6 328.8-328.9 328.8z"
+                fill="#1A1A1A"
+              ></path>
+            </g>
+          </svg>
+            <div class="humidity">74%</div>
+          </div>
+          <div class="flex">
+            <svg
+              width="35px"
+              height="35px"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+              <g
+                id="SVGRepo_tracerCarrier"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></g>
+              <g id="SVGRepo_iconCarrier">
+                <path
+                  opacity="0.4"
+                  d="M2 13.1002L4.5 11.6002C6.04 10.6802 7.96 10.6802 9.5 11.6002C11.04 12.5202 12.96 12.5202 14.5 11.6002C16.04 10.6802 17.96 10.6802 19.5 11.6002L22 13.1002"
+                  stroke="#a3a3a3"
+                  stroke-width="1.5"
+                  stroke-miterlimit="10"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                ></path>
+                <path
+                  d="M2 3.8999L4.5 5.3999C6.04 6.3199 7.96 6.3199 9.5 5.3999C11.04 4.4799 12.96 4.4799 14.5 5.3999C16.04 6.3199 17.96 6.3199 19.5 5.3999L22 3.8999"
+                  stroke="#a3a3a3"
+                  stroke-width="1.5"
+                  stroke-miterlimit="10"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                ></path>
+                <path
+                  d="M2 20.1002L4.5 18.6002C6.04 17.6802 7.96 17.6802 9.5 18.6002C11.04 19.5202 12.96 19.5202 14.5 18.6002C16.04 17.6802 17.96 17.6802 19.5 18.6002L22 20.1002"
+                  stroke="#a3a3a3"
+                  stroke-width="1.5"
+                  stroke-miterlimit="10"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                ></path>
+              </g>
+            </svg>
+          <div class="wind">Vento: 16 km/h</div>
+        </div>
       </div>
     </div>
   </body>
